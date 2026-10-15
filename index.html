@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6a1b9a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<title>After the Full Stop...</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<script>
+/* ============ CONFIGURATION (EDIT HERE) ============ */
+var CONFIG = {
+  BLOG_URL: "https://bhushandeshpande53.blogspot.com",   // your blog address
+  TITLE: "After the Full Stop...",                        // app title (also editable in Settings)
+  SUBTITLE: "कविता, लेख आणि छायाचित्रे | Poems, essays & photographs", // app subtitle
+  COPYRIGHT: "© Bhushan Deshpande. All rights reserved. | सर्व हक्क राखीव.",
+  AUTHOR: "Bhushan Deshpande",
+  ABOUT_MR: "मी भूषण देशपांडे. हा माझा ब्लॉग आहे - कविता, लेख आणि छायाचित्रांचे घर.",
+  ABOUT_EN: "I am Bhushan Deshpande. This is my blog - a home for poems, essays and photographs.",
+  PUSH_CONFIGURED: false   // keep false until a push service is set up AND tested (see guide)
+};
+/* ==================================================== */
+</script>
+<style>
+:root{--p:#6a1b9a;--p2:#e91e63;--g:#ffb300;--bg:#fff8ee;--card:#fff;--tx:#2b2233;--mu:#7a6f85;--r:18px}
+body.dark{--bg:#17121d;--card:#251d2f;--tx:#f3ecfa;--mu:#b3a6c2}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:'Noto Sans Devanagari',system-ui,sans-serif;font-size:16px}
+body{padding-top:env(safe-area-inset-top);padding-bottom:calc(68px + env(safe-area-inset-bottom));
+background-image:radial-gradient(circle at 10% 0,rgba(233,30,99,.10),transparent 40%),radial-gradient(circle at 100% 30%,rgba(255,179,0,.14),transparent 40%)}
+header{background:linear-gradient(135deg,var(--p),var(--p2) 70%,var(--g));color:#fff;padding:22px 18px 20px;border-radius:0 0 28px 28px;display:flex;gap:12px;align-items:center}
+header img{width:46px;height:46px;border-radius:14px;background:#fff3}
+header h1{margin:0;font:700 1.4rem 'Playfair Display','Noto Serif Devanagari',serif;line-height:1.2}
+header p{margin:3px 0 0;font-size:.82rem;opacity:.92}
+main{padding:16px;max-width:760px;margin:auto}
+h2{font:700 1.2rem 'Noto Serif Devanagari','Playfair Display',serif;margin:6px 0 12px}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);box-shadow:0 -4px 18px #0002;padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav button{flex:1;border:0;background:none;color:var(--mu);padding:9px 2px;font-size:.68rem;min-height:56px;font-family:inherit}
+nav button b{display:block;font-size:1.3rem;font-weight:400}
+nav button.on{color:var(--p2);font-weight:700}
+.card{background:var(--card);border-radius:var(--r);overflow:hidden;margin-bottom:16px;box-shadow:0 3px 14px #0001;position:relative}
+.card img.th{width:100%;height:190px;object-fit:cover;display:block}
+.card .bd{padding:13px 15px 15px}
+.card h3{margin:4px 0 6px;font:700 1.1rem/1.45 'Noto Serif Devanagari',serif}
+.meta{font-size:.75rem;color:var(--mu)}
+.chip{display:inline-block;background:linear-gradient(90deg,var(--p),var(--p2));color:#fff;border-radius:99px;padding:4px 11px;font-size:.72rem;margin:3px 4px 3px 0;border:0;font-family:inherit}
+.chip.alt{background:var(--card);color:var(--p);border:1px solid var(--p)}
+.hero img.th{height:250px}
+.bm{position:absolute;top:10px;right:10px;background:#fffd;border:0;border-radius:50%;width:42px;height:42px;font-size:1.2rem}
+.sn{font-size:.9rem;color:var(--mu);margin:0}
+input,textarea,select{width:100%;padding:12px;border-radius:12px;border:1px solid #b9a9c9;background:var(--card);color:var(--tx);font:inherit;margin:5px 0 12px}
+.btn{background:linear-gradient(90deg,var(--p),var(--p2));color:#fff;border:0;border-radius:14px;padding:13px 18px;font:600 .95rem inherit;font-family:inherit;min-height:46px;display:inline-block;text-decoration:none;margin:3px 4px 3px 0}
+.btn.alt{background:var(--card);color:var(--p);border:1px solid var(--p)}
+.spin{width:38px;height:38px;border:4px solid #d9c3ea;border-top-color:var(--p2);border-radius:50%;animation:s 1s linear infinite;margin:40px auto}
+@keyframes s{to{transform:rotate(360deg)}}
+.empty,.err{text-align:center;padding:30px 14px;color:var(--mu)}
+.err{color:#c62828}
+#reader{position:fixed;inset:0;background:var(--bg);overflow:auto;z-index:10;display:none;padding-top:env(safe-area-inset-top)}
+#reader.open{display:block}
+.rbar{position:sticky;top:0;background:var(--bg);display:flex;gap:6px;padding:10px 12px;z-index:2;box-shadow:0 2px 8px #0001}
+.rbody{max-width:700px;margin:auto;padding:12px 18px 90px;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.rbody h1{font:700 1.6rem/1.45 'Noto Serif Devanagari',serif}
+.pb{font-family:'Noto Serif Devanagari',Georgia,serif;font-size:1.1rem;line-height:2;word-wrap:break-word;overflow-wrap:anywhere}
+.pb img{max-width:100%!important;height:auto!important;border-radius:14px}
+.pb iframe,.pb video{max-width:100%;border-radius:14px}
+.pb .separator,.pb .tr-caption-container{text-align:center!important}
+.wm{position:relative;display:inline-block;max-width:100%}
+.wm::after{content:attr(data-wm);position:absolute;right:10px;bottom:8px;color:#fff;font-size:.75rem;text-shadow:0 0 4px #000;opacity:.8;pointer-events:none}
+.cr{font-size:.78rem;color:var(--mu);text-align:center;margin:26px 0 8px;border-top:1px dashed var(--mu);padding-top:12px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0}
+.note{background:#fff3cd;color:#5c4400;border-radius:12px;padding:11px 13px;font-size:.85rem;margin:8px 0}
+body.dark .note{background:#4a3a05;color:#ffe9a6}
+.grp{background:var(--card);border-radius:var(--r);padding:14px;margin-bottom:14px}
+</style>
+</head>
+<body>
+<header><img id="logo" src="icon-192.png" alt=""><div><h1 id="ttl"></h1><p id="sub"></p></div></header>
+<main id="view"></main>
+<nav id="nav"></nav>
+<div id="reader"></div>
+
+<script>
+/* ---------- helpers & storage ---------- */
+function load(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var S=load('atfs',{lang:'mr',title:'',sub:'',icon:'',dark:false,name:'',notif:false,wm:true,copy:''});
+var BM=load('atfs_bm',[]), POSTS=[], TAB='home', LOADING=true, ERR='';
+var T={
+home:['मुख्यपृष्ठ','Home'],labels:['विभाग','Labels'],archive:['संग्रह','Archive'],search:['शोध','Search'],more:['अधिक','More'],
+bookmarks:['जतन केलेले','Bookmarks'],settings:['सेटिंग्ज','Settings'],about:['लेखकाबद्दल','About the Blogger'],
+follow:['अनुसरण करा','Follow This App'],subscribe:['सदस्यता घ्या','Subscribe This App'],attr:['श्रेयनिर्देश','Attribution'],
+refresh:['ताजे करा','Refresh'],loading:['लोड होत आहे...','Loading...'],empty:['काहीही सापडले नाही.','Nothing found.'],
+error:['पोस्ट मिळवता आल्या नाहीत. इंटरनेट तपासा आणि पुन्हा प्रयत्न करा.','Could not load posts. Check internet and try again.'],
+openorig:['मूळ पोस्ट उघडा','Open original post'],back:['← मागे','← Back'],lang:['भाषा','Language'],
+sear:['शीर्षक, मजकूर किंवा विभाग शोधा','Search title, text or label'],latest:['नवीन पोस्ट','Latest posts'],
+stitle:['अ‍ॅपचे शीर्षक','App title'],ssub:['उपशीर्षक','Subtitle'],sicon:['अ‍ॅप चिन्ह (आयकॉन) अपलोड करा','Upload app icon'],
+scopy:['कॉपीराइट सूचना','Copyright notice'],swm:['चित्रांवर वॉटरमार्क','Watermark on images'],dark:['गडद थीम','Dark theme'],
+uname:['तुमचे नाव (लॉगिन)','Your name (login)'],login:['लॉगिन / नाव जतन करा','Login / save name'],
+notif:['नवीन पोस्टच्या सूचना','New-post notifications'],saved:['जतन झाले','Saved'],
+npend:['सूचना अजून सुरू केलेल्या नाहीत. पुश सेवा सेट-अप करून तपासेपर्यंत त्या काम करणार नाहीत.','Notifications are NOT active yet. They will not work until a push service is set up and tested.'],
+nopt:['तुमची पसंती जतन केली. सेवा सुरू झाल्यावर सूचना मिळतील.','Your choice is saved. You will get alerts once the service is switched on.'],
+posts:['पोस्ट','posts'],nocreds:['हे अ‍ॅप तुमचा पासवर्ड कधीही मागत नाही. नाव फक्त या फोनवर साठवले जाते.','This app never asks for a password. Your name stays only on this phone.'],
+shot:['टीप: कोणतीही पद्धत कॉपी होण्यापासून १००% रोखू शकत नाही.','Note: no method can fully prevent copying.'],
+feed:['फीड लिंक कॉपी करा','Copy feed link'],copied:['कॉपी झाले','Copied'],email:['ब्लॉग उघडा (ईमेल सदस्यता)','Open blog (email follow)'],
+attrtxt:['सर्व मजकूर व छायाचित्रे लेखकाची आहेत. अ‍ॅप खुले तंत्रज्ञान (HTML/JS), Google Blogger फीड व Google Fonts (Noto, Playfair - SIL OFL) वापरते.','All text and photos belong to the author. Built with open web tech (HTML/JS), the Google Blogger feed and Google Fonts (Noto, Playfair - SIL OFL).'],
+all:['सर्व','All'],reload:['पुन्हा प्रयत्न करा','Try again'],nobm:['अजून काहीही जतन केलेले नाही.','No bookmarks yet.']
+};
+function t(k){return T[k][S.lang==='mr'?0:1]}
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function title(){return S.title||CONFIG.TITLE}
+function subt(){return S.sub||CONFIG.SUBTITLE}
+function fdate(d){try{return new Date(d).toLocaleDateString(S.lang==='mr'?'mr-IN':'en-IN',{year:'numeric',month:'long',day:'numeric'})}catch(e){return d}}
+
+/* ---------- fetch feed (JSONP: works without any server) ---------- */
+function fetchPage(start){return new Promise(function(res,rej){
+  var cb='cb'+Date.now()+start, s=document.createElement('script');
+  window[cb]=function(d){clean();res(d)};
+  function clean(){delete window[cb];s.remove()}
+  s.onerror=function(){clean();rej()};
+  setTimeout(function(){if(window[cb]){clean();rej()}},20000);
+  s.src=CONFIG.BLOG_URL+'/feeds/posts/default?alt=json-in-script&max-results=100&start-index='+start+'&callback='+cb;
+  document.body.appendChild(s)})}
+function parse(e){
+  var html=e.content?e.content.$t:(e.summary?e.summary.$t:'');
+  var im=html.match(/<img[^>]+src=["']([^"']+)["']/i), th=e.media$thumbnail?e.media$thumbnail.url.replace(/\/s72-c\//,'/s640/'):'';
+  var link='';(e.link||[]).forEach(function(l){if(l.rel==='alternate')link=l.href});
+  var plain=html.replace(/<(br|\/p|\/div)[^>]*>/gi,' ').replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();
+  return{id:e.id.$t,title:e.title.$t||'(—)',date:e.published.$t,html:html,img:th||(im?im[1]:''),link:link,
+    labels:(e.category||[]).map(function(c){return c.term}),plain:plain,vid:/<iframe|<video/i.test(html)}}
+async function loadPosts(){
+  LOADING=true;ERR='';render();
+  try{var all=[],start=1,d;
+    do{d=await fetchPage(start);var en=(d.feed.entry||[]);all=all.concat(en.map(parse));start+=100;
+      if(en.length<100)break}while(start<1000);
+    POSTS=all.sort(function(a,b){return new Date(b.date)-new Date(a.date)});
+    save('atfs_cache',POSTS.map(function(p){var q=Object.assign({},p);return q}).slice(0,30));
+  }catch(e){var c=load('atfs_cache',[]);if(c.length&&!POSTS.length)POSTS=c;ERR=POSTS.length?'':'e'}
+  LOADING=false;render()}
+
+/* ---------- rendering ---------- */
+function card(p,hero){
+  var b=BM.indexOf(p.id)>-1;
+  return '<div class="card'+(hero?' hero':'')+'" onclick="openPost(\''+p.id+'\')">'+(p.img?'<img class="th" loading="lazy" src="'+esc(p.img)+'" alt="">':'')+
+  '<button class="bm" aria-label="bookmark" onclick="event.stopPropagation();tbm(\''+p.id+'\')">'+(b?'★':'☆')+'</button><div class="bd"><div class="meta">'+fdate(p.date)+(p.vid?' · ▶':'')+'</div><h3>'+esc(p.title)+'</h3>'+
+  '<p class="sn">'+esc(p.plain.slice(0,hero?160:110))+'…</p>'+p.labels.map(function(l){return '<span class="chip">'+esc(l)+'</span>'}).join('')+'</div></div>'}
+function list(a,h){return a.length?a.map(function(p,i){return card(p,h&&i===0)}).join(''):'<div class="empty">'+t('empty')+'</div>'}
+function head(){$('ttl').textContent=title();$('sub').textContent=subt();if(S.icon)$('logo').src=S.icon;document.title=title();document.body.className=S.dark?'dark':'';document.documentElement.lang=S.lang}
+function bar(){return '<div class="row"><h2>'+''+'</h2><button class="btn alt" onclick="loadPosts()">⟳ '+t('refresh')+'</button></div>'}
+function render(){
+  head();
+  var nv=[['home','🏠'],['labels','🏷️'],['archive','🗓️'],['search','🔍'],['more','☰']];
+  $('nav').innerHTML=nv.map(function(n){return '<button class="'+(TAB===n[0]?'on':'')+'" onclick="go(\''+n[0]+'\')"><b>'+n[1]+'</b>'+t(n[0])+'</button>'}).join('');
+  var v=$('view'),h='';
+  if(LOADING&&!POSTS.length){v.innerHTML='<div class="spin"></div><div class="empty">'+t('loading')+'</div>';return}
+  if(ERR&&!POSTS.length){v.innerHTML='<div class="err">⚠️ '+t('error')+'<br><br><button class="btn" onclick="loadPosts()">'+t('reload')+'</button></div>';return}
+  if(TAB==='home'){h='<div class="row"><h2>'+t('latest')+'</h2><button class="btn alt" onclick="loadPosts()">'+(LOADING?'…':'⟳')+' '+t('refresh')+'</button></div>'+list(POSTS,true)}
+  else if(TAB==='labels'){var L={};POSTS.forEach(function(p){p.labels.forEach(function(l){L[l]=(L[l]||0)+1})});
+    h='<h2>'+t('labels')+'</h2><div>'+Object.keys(L).sort().map(function(l){return '<button class="chip" onclick="showLabel(\''+encodeURIComponent(l)+'\')">'+esc(l)+' ('+L[l]+')</button>'}).join('')+'</div><div id="sub2"></div>'}
+  else if(TAB==='archive'){var A={};POSTS.forEach(function(p){var k=p.date.slice(0,7);A[k]=(A[k]||0)+1});
+    h='<h2>'+t('archive')+'</h2><div>'+Object.keys(A).sort().reverse().map(function(k){return '<button class="chip alt" onclick="showArch(\''+k+'\')">'+fdate(k+'-15').replace(/\d+,?\s?/,'')+' ('+A[k]+')</button>'}).join('')+'</div><div id="sub2"></div>'}
+  else if(TAB==='search'){h='<h2>'+t('search')+'</h2><input id="q" type="search" placeholder="'+t('sear')+'" oninput="doSearch()"><div id="sub2"></div>'}
+  else if(TAB==='bm'){var b=POSTS.filter(function(p){return BM.indexOf(p.id)>-1});h='<h2>'+t('bookmarks')+'</h2>'+(b.length?list(b):'<div class="empty">'+t('nobm')+'</div>')}
+  else if(TAB==='more'){h=more()}
+  else if(TAB==='settings'){h=settings()}
+  v.innerHTML=h}
+function go(x){TAB=x;render();scrollTo(0,0)}
+function showLabel(l){l=decodeURIComponent(l);$('sub2').innerHTML='<h2>'+esc(l)+'</h2>'+list(POSTS.filter(function(p){return p.labels.indexOf(l)>-1}))}
+function showArch(k){$('sub2').innerHTML=list(POSTS.filter(function(p){return p.date.slice(0,7)===k}))}
+function doSearch(){var q=$('q').value.trim().toLowerCase();$('sub2').innerHTML=q?list(POSTS.filter(function(p){return (p.title+' '+p.plain+' '+p.labels.join(' ')).toLowerCase().indexOf(q)>-1})):''}
+function tbm(id){var i=BM.indexOf(id);i>-1?BM.splice(i,1):BM.push(id);save('atfs_bm',BM);render()}
+function more(){return '<h2>'+t('more')+'</h2>'+[['bm','⭐',t('bookmarks')],['about','✍️',t('about')],['follow','❤️',t('follow')],['subscribe','🔔',t('subscribe')],['attr','📜',t('attr')],['settings','⚙️',t('settings')]].map(function(m){return '<div class="card" onclick="'+(m[0]==='about'||m[0]==='follow'||m[0]==='subscribe'||m[0]==='attr'?'info(\''+m[0]+'\')':'go(\''+m[0]+'\')')+'"><div class="bd"><h3>'+m[1]+' '+m[2]+'</h3></div></div>'}).join('')+'<div class="cr">'+esc(S.copy||CONFIG.COPYRIGHT)+'</div>'}
+function info(k){var h='';
+  if(k==='about')h='<h2>'+t('about')+'</h2><div class="grp pb">'+esc(S.lang==='mr'?CONFIG.ABOUT_MR:CONFIG.ABOUT_EN)+'<br><br><b>'+esc(CONFIG.AUTHOR)+'</b></div><a class="btn" target="_blank" href="'+CONFIG.BLOG_URL+'">'+t('openorig')+'</a>';
+  if(k==='follow')h='<h2>'+t('follow')+'</h2><div class="grp"><a class="btn" target="_blank" href="'+CONFIG.BLOG_URL+'">'+t('email')+'</a><button class="btn alt" onclick="cp()">'+t('feed')+'</button></div>';
+  if(k==='subscribe')h='<h2>'+t('subscribe')+'</h2><div class="grp"><div class="row"><span>'+t('notif')+'</span><input type="checkbox" style="width:28px;margin:0" '+(S.notif?'checked':'')+' onchange="S.notif=this.checked;save(\'atfs\',S);info(\'subscribe\')"></div>'+(CONFIG.PUSH_CONFIGURED?'':'<div class="note">⚠️ '+t('npend')+'</div>')+(S.notif?'<p>'+t('nopt')+'</p>':'')+'</div>';
+  if(k==='attr')h='<h2>'+t('attr')+'</h2><div class="grp">'+t('attrtxt')+'</div>';
+  $('view').innerHTML=h+'<br><button class="btn alt" onclick="go(\'more\')">'+t('back')+'</button>';scrollTo(0,0)}
+function cp(){var u=CONFIG.BLOG_URL+'/feeds/posts/default';try{navigator.clipboard.writeText(u);alert(t('copied'))}catch(e){prompt('',u)}}
+function settings(){return '<h2>'+t('settings')+'</h2><div class="grp"><label>'+t('lang')+'</label><select onchange="S.lang=this.value;save(\'atfs\',S);render()"><option value="mr" '+(S.lang==='mr'?'selected':'')+'>मराठी</option><option value="en" '+(S.lang==='en'?'selected':'')+'>English</option></select>'+
+ '<label>'+t('stitle')+'</label><input id="st" value="'+esc(title())+'"><label>'+t('ssub')+'</label><input id="ss" value="'+esc(subt())+'">'+
+ '<label>'+t('sicon')+'</label><input type="file" accept="image/*" onchange="icon(this)"><label>'+t('scopy')+'</label><textarea id="sc" rows="2">'+esc(S.copy||CONFIG.COPYRIGHT)+'</textarea>'+
+ '<div class="row"><span>'+t('swm')+'</span><input type="checkbox" style="width:28px;margin:0" '+(S.wm?'checked':'')+' onchange="S.wm=this.checked;save(\'atfs\',S)"></div><div class="row"><span>'+t('dark')+'</span><input type="checkbox" style="width:28px;margin:0" '+(S.dark?'checked':'')+' onchange="S.dark=this.checked;save(\'atfs\',S);render()"></div>'+
+ '<button class="btn" onclick="S.title=$(\'st\').value;S.sub=$(\'ss\').value;S.copy=$(\'sc\').value;save(\'atfs\',S);head();alert(t(\'saved\'))">'+t('saved')+' ✔</button></div>'+
+ '<div class="grp"><label>'+t('uname')+'</label><input id="un" value="'+esc(S.name)+'"><button class="btn" onclick="S.name=$(\'un\').value;save(\'atfs\',S);alert(t(\'saved\'))">'+t('login')+'</button><p class="meta">'+t('nocreds')+'</p>'+(S.name?'<p>👤 '+esc(S.name)+'</p>':'')+'</div><div class="note">'+t('shot')+'</div>'}
+function icon(i){var f=i.files[0];if(!f)return;var r=new FileReader();r.onload=function(){S.icon=r.result;save('atfs',S);head()};r.readAsDataURL(f)}
+
+/* ---------- reading view ---------- */
+function openPost(id){
+  var p=POSTS.filter(function(x){return x.id===id})[0];if(!p)return;
+  var d=document.createElement('div');d.innerHTML=p.html;
+  d.querySelectorAll('script').forEach(function(s){s.remove()});
+  d.querySelectorAll('iframe').forEach(function(f){var s=f.getAttribute('src')||'';if(s.indexOf('//')===0)f.src='https:'+s;f.removeAttribute('width');f.style.width='100%';f.style.aspectRatio='16/9';f.style.height='auto'});
+  if(S.wm)d.querySelectorAll('img').forEach(function(im){var w=document.createElement('span');w.className='wm';w.setAttribute('data-wm',CONFIG.AUTHOR);im.parentNode.insertBefore(w,im);w.appendChild(im);im.setAttribute('draggable','false')});
+  var r=$('reader');
+  r.innerHTML='<div class="rbar"><button class="btn alt" onclick="closeR()">'+t('back')+'</button><a class="btn" target="_blank" rel="noopener" href="'+esc(p.link)+'">'+t('openorig')+'</a></div><div class="rbody"><div class="meta">'+fdate(p.date)+'</div><h1>'+esc(p.title)+'</h1><div>'+p.labels.map(function(l){return '<span class="chip">'+esc(l)+'</span>'}).join('')+'</div><div class="pb">'+d.innerHTML+'</div><div class="cr">'+esc(S.copy||CONFIG.COPYRIGHT)+'</div></div>';
+  r.classList.add('open');r.scrollTop=0;history.pushState({r:1},'')}
+function closeR(){$('reader').classList.remove('open');$('reader').innerHTML=''}
+window.addEventListener('popstate',closeR);
+document.addEventListener('contextmenu',function(e){if(e.target.closest('#reader'))e.preventDefault()});
+document.addEventListener('copy',function(e){if(e.target.closest&&document.getElementById('reader').classList.contains('open'))e.preventDefault()});
+
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(function(){});
+render();loadPosts();
+</script>
+</body>
+</html>
